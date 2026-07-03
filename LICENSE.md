@@ -5,15 +5,14 @@ This repository contains materials under different licenses:
 ## 1. Source Code
 
 **File**: [`src/tetracoil_field.py`](src/tetracoil_field.py)
-**License**: GNU General Public License v3.0
-**Full Terms**: See [`LICENSES/GPL-3.0.txt`](LICENSES/GPL-3.0.txt)
+**License**: MIT
+**Full Terms**: See [`LICENSES/MIT.txt`](LICENSES/MIT.txt)
 
 ## 2. Generated Visualisations
 
 **Files**:
 
-- [`output/VFPt_tetracoil.svg`](output/VFPt_tetracoil.svg)
-- All SVG files in the `output/` directory
+- All files in the `output/` directory (SVG and PNG)
 
 **License**: Creative Commons Attribution 4.0 International
 **Full Terms**: See [`LICENSES/CC-BY-4.0.txt`](LICENSES/CC-BY-4.0.txt)
@@ -29,18 +28,17 @@ For specific licensing information of individual files, please refer to:
 
 | File Type           | License   | Location                                           |
 | ------------------- | --------- | -------------------------------------------------- |
-| Python source code  | GPL v3.0  | [`src/tetracoil_field.py`](src/tetracoil_field.py) |
+| Python source code  | MIT       | [`src/tetracoil_field.py`](src/tetracoil_field.py) |
 | Generated SVG files | CC-BY 4.0 | [`output/`](output/) directory                     |
 | License texts       | N/A       | [`LICENSES/`](LICENSES/) directory                 |
 
 ## Attribution Requirements
 
-### For Source Code Usage (GPL v3.0)
+### For Source Code Usage (MIT)
 
 - Include copyright notice
 - Include license text
-- State changes made to the code
-- Distribute derivative works under GPL v3.0
+- No copyleft: derivative works may use any licence
 
 ### For Visualisation Usage (CC-BY 4.0)
 

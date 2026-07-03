@@ -1,0 +1,53 @@
+name: Python CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.12']
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8
+        pip install -r requirements.txt
+
+    - name: Lint with flake8
+      run: |
+        # Fail on syntax errors or undefined names; style issues as warnings only
+        flake8 src --count --select=E9,F63,F7,F82 --show-source --statistics
+        flake8 src --count --exit-zero --max-complexity=12 --max-line-length=127 --statistics
+
+    - name: Run renderer end-to-end
+      run: python src/tetracoil_field.py
+
+    - name: Verify outputs were produced
+      run: |
+        test -s output/tetracoil_field_lines.svg
+        test -s output/tetracoil_field_lines.png
+        python - <<'EOF'
+        # sanity-check the physics: field at centre is finite and uniform to <1%
+        import sys
+        sys.path.insert(0, "src")
+        from tetracoil_field import Config, coil_set, field_at
+        coils = coil_set(Config())
+        b0, _ = field_at(coils, 0.0, 0.0)
+        assert b0 > 0, "centre field not positive"
+        for x, y in [(0.3, 0.0), (0.0, 0.3), (0.2, 0.2)]:
+            bx, by = field_at(coils, x, y)
+            dev = abs((bx**2 + by**2) ** 0.5 - b0) / b0
+            assert dev < 0.01, f"uniformity broken at ({x},{y}): {dev:.4f}"
+        print("physics sanity checks passed")
+        EOF
